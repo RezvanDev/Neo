@@ -6,7 +6,6 @@ const MainPage = () => {
 
   return (
     <div className="relative min-h-screen bg-gradient-to-b from-[#000000] via-[#0A0A1E] to-[#0A0A1E] text-white font-sans overflow-hidden">
-      {/* ИЗМЕНИТЬ: Добавлен бордер */}
       <div className="absolute inset-0 border border-[#161616] opacity-50 pointer-events-none"></div>
       <header className="relative w-full h-[100px]">
         <img
@@ -22,7 +21,6 @@ const MainPage = () => {
           <a href="#" className="text-white hover:text-yellow-400 transition-colors opacity-80 hover:opacity-100">О проекте</a>
           <a href="#" className="text-white hover:text-yellow-400 transition-colors opacity-80 hover:opacity-100">Статистика</a>
         </nav>
-        {/* ИЗМЕНИТЬ: Обновлено позиционирование селектора языка и кнопки "Личный кабинет" */}
         <div className="absolute right-[280px] top-[23px] flex items-center">
           <div className="relative mr-4">
             <select className="appearance-none bg-transparent text-white text-sm border-none outline-none pr-6 opacity-80 cursor-pointer">
@@ -40,7 +38,7 @@ const MainPage = () => {
               height: '54px',
               border: '2.25328px solid #FCE524'
             }}
-            onClick={() => navigate('/dashboard')}
+            onClick={() => navigate('/login')}
           >
             <span className="relative z-10 ml-8">Личный кабинет</span>
             <img
