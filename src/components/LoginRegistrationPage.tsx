@@ -1,23 +1,128 @@
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
+import EmailVerification from './EmailVerification';
+import CodeNotReceivedInfo from './CodeNotReceived';
+import CreatePassword from './CreatePassword';
+import UserExistsWarning from './UserExistsWarning';
+import { registerUser, loginUser, verifyEmail, createPassword } from '../api/auth';
 
-const LoginRegistrationPage = () => {
+const LoginRegistrationPage: React.FC = () => {
+  const navigate = useNavigate();
   const [isLoginMode, setIsLoginMode] = useState(true);
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [agreeTerms, setAgreeTerms] = useState(false);
-  const navigate = useNavigate();
+  const [showEmailVerification, setShowEmailVerification] = useState(false);
+  const [showCodeNotReceivedInfo, setShowCodeNotReceivedInfo] = useState(false);
+  const [showUserExistsWarning, setShowUserExistsWarning] = useState(false);
+  const [showCreatePassword, setShowCreatePassword] = useState(false);
+  const [error, setError] = useState<string | null>(null);
 
   const handleModeToggle = () => {
     setIsLoginMode(!isLoginMode);
     setEmail('');
     setPassword('');
     setAgreeTerms(false);
+    setError(null);
   };
 
   const isEmailValid = email.includes('@') && email.includes('.');
   const isPasswordValid = password.length >= 6;
   const canProceed = isEmailValid && (isLoginMode ? isPasswordValid : agreeTerms);
+
+  const handleSubmit = async () => {
+    setError(null);
+    if (!isLoginMode) {
+      try {
+        await registerUser(email);
+        setShowEmailVerification(true);
+      } catch (error) {
+        if (error instanceof Error && error.message === 'User with this email already exists') {
+          setShowUserExistsWarning(true);
+        } else {
+          setError('An error occurred during registration. Please try again.');
+        }
+      }
+    } else {
+      try {
+        const result = await loginUser(email, password);
+        console.log('Login successful', result);
+        navigate('/dashboard');
+      } catch (error) {
+        setError('Invalid email or password. Please try again.');
+      }
+    }
+  };
+
+  const handleVerifyEmail = async (code: string) => {
+    try {
+      await verifyEmail(email, code);
+      setShowEmailVerification(false);
+      setShowCreatePassword(true);
+    } catch (error) {
+      setError('Invalid verification code. Please try again.');
+    }
+  };
+
+  const handleCreatePassword = async (newPassword: string) => {
+    try {
+      await createPassword(email, newPassword);
+      navigate('/dashboard');
+    } catch (error) {
+      setError('Failed to create password. Please try again.');
+    }
+  };
+
+  if (showUserExistsWarning) {
+    return (
+      <UserExistsWarning 
+        onClose={() => {
+          setShowUserExistsWarning(false);
+          setIsLoginMode(true); // Переключаемся на режим входа
+        }}
+        onResetPassword={() => {
+          setShowUserExistsWarning(false);
+          // Здесь логика для перехода на страницу восстановления пароля
+          // navigate('/reset-password');
+        }}
+      />
+    );
+  }
+
+  if (showEmailVerification) {
+    return (
+      <div className="min-h-screen bg-[#001131] flex items-center justify-center p-4">
+        {showCodeNotReceivedInfo ? (
+          <CodeNotReceivedInfo
+            email={email}
+            onClose={() => setShowCodeNotReceivedInfo(false)}
+          />
+        ) : (
+          <EmailVerification 
+            email={email}
+            onVerify={handleVerifyEmail}
+            onCancel={() => setShowEmailVerification(false)}
+            onCodeNotReceived={() => setShowCodeNotReceivedInfo(true)}
+          />
+        )}
+      </div>
+    );
+  }
+
+  if (showCreatePassword) {
+    return (
+      <div className="min-h-screen bg-[#001131] flex items-center justify-center p-4">
+        <CreatePassword 
+          email={email}
+          onSubmit={handleCreatePassword}
+          onCancel={() => {
+            setShowCreatePassword(false);
+            setShowEmailVerification(true);
+          }}
+        />
+      </div>
+    );
+  }
 
   return (
     <div className="min-h-screen bg-[#001131] flex items-center justify-center p-4 sm:p-6 md:p-8">
@@ -49,6 +154,10 @@ const LoginRegistrationPage = () => {
             {isLoginMode ? 'Вход в личный кабинет' : 'Регистрация личного кабинета'}
           </h2>
           
+          {error && (
+            <div className="mb-4 text-red-500 text-sm">{error}</div>
+          )}
+
           <div className="mb-4">
             <label className="block text-white text-sm sm:text-base mb-2">Email</label>
             <input
@@ -93,6 +202,7 @@ const LoginRegistrationPage = () => {
           <button
             className={`w-full py-2 sm:py-3 rounded-full mb-4 text-sm sm:text-base ${canProceed ? 'bg-[#FBE318] text-black' : 'bg-gray-500 text-white cursor-not-allowed'}`}
             disabled={!canProceed}
+            onClick={handleSubmit}
           >
             {isLoginMode ? 'Войти' : 'Далее'}
           </button>
@@ -105,10 +215,20 @@ const LoginRegistrationPage = () => {
           </button>
           
           <p className="text-white text-xs sm:text-sm mt-4 text-center">
-            Если у Вас возникли проблемы обратитесь в службу поддержки клиентов support или напишите в LiveChat
+            Если у Вас возникли проблемы обратитесь в службу поддержки клиентов <span className="text-yellow-400">support</span> или напишите в LiveChat
           </p>
         </div>
       </div>
+
+      {showUserExistsWarning && (
+        <UserExistsWarning 
+          onClose={() => setShowUserExistsWarning(false)}
+          onResetPassword={() => {
+            setShowUserExistsWarning(false);
+            // Здесь логика для перехода на страницу восстановления пароля
+          }}
+        />
+      )}
     </div>
   );
 };
