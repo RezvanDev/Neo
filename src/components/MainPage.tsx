@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 
-const MainPage = () => {
+const MainPage: React.FC = () => {
   const navigate = useNavigate();
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
 
@@ -39,7 +39,7 @@ const MainPage = () => {
               <span>Личный кабинет</span>
             </button>
           </div>
-          <button 
+          <button
             className="lg:hidden"
             onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
           >
@@ -49,7 +49,6 @@ const MainPage = () => {
           </button>
         </div>
       </header>
-      
       {isMobileMenuOpen && (
         <div className="lg:hidden bg-[#0A0A1E] p-4">
           <nav className="flex flex-col space-y-2">
@@ -74,7 +73,6 @@ const MainPage = () => {
           </div>
         </div>
       )}
-
       <main className="container mx-auto mt-20 px-4">
         {/* Здесь можно добавить основное содержимое страницы */}
       </main>
