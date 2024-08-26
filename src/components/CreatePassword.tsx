@@ -1,14 +1,12 @@
 import React, { useState, useEffect } from 'react';
 import { Eye, EyeOff, Check } from 'lucide-react';
-import { createPassword } from '../api/auth';
 
 interface CreatePasswordProps {
   onSubmit: (password: string) => void;
   onCancel: () => void;
-  email: string;
 }
 
-const CreatePassword: React.FC<CreatePasswordProps> = ({ onSubmit, onCancel, email }) => {
+const CreatePassword: React.FC<CreatePasswordProps> = ({ onSubmit, onCancel }) => {
   const [password, setPassword] = useState('');
   const [confirmPassword, setConfirmPassword] = useState('');
   const [showPassword, setShowPassword] = useState(false);
@@ -28,15 +26,12 @@ const CreatePassword: React.FC<CreatePasswordProps> = ({ onSubmit, onCancel, ema
     });
   }, [password]);
 
-  const handleSubmit = async () => {
+  const handleSubmit = () => {
     setError(null);
     if (password === confirmPassword && Object.values(isValid).every(Boolean)) {
-      try {
-        await createPassword(email, password);
-        onSubmit(password);
-      } catch (error) {
-        setError('Failed to create password. Please try again.');
-      }
+      onSubmit(password);
+    } else if (password !== confirmPassword) {
+      setError('Пароли не совпадают');
     }
   };
 

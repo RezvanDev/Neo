@@ -1,4 +1,13 @@
-const API_URL = 'https://900d-202-79-184-241.ngrok-free.app/auth';
+const API_URL = 'https://4027-202-79-184-241.ngrok-free.app/auth';
+
+const handleResponse = async (response: Response) => {
+  const data = await response.json();
+  console.log('Server response:', data);
+  if (!response.ok) {
+    throw new Error(data.message || 'Произошла ошибка');
+  }
+  return data;
+};
 
 export const registerUser = async (email: string) => {
   const response = await fetch(`${API_URL}/register`, {
@@ -6,35 +15,31 @@ export const registerUser = async (email: string) => {
     headers: { 'Content-Type': 'application/json' },
     body: JSON.stringify({ email }),
   });
-  if (!response.ok) {
-    const errorData = await response.json();
-    throw new Error(errorData.message || 'Failed to register');
-  }
-  return response.json();
+  return handleResponse(response);
 };
 
 export const verifyEmail = async (email: string, code: string) => {
+  console.log('Sending verification request:', { email, code });
   const response = await fetch(`${API_URL}/verify-email`, {
     method: 'POST',
     headers: { 'Content-Type': 'application/json' },
     body: JSON.stringify({ email, code }),
   });
+  const data = await response.json();
+  console.log('Server response:', data);
   if (!response.ok) {
-    throw new Error('Invalid verification code');
+    throw new Error(data.message || 'An error occurred');
   }
-  return response.json();
+  return data;
 };
 
-export const createPassword = async (email: string, password: string) => {
-  const response = await fetch(`${API_URL}/create-password`, {
+export const completeRegistration = async (email: string, password: string) => {
+  const response = await fetch(`${API_URL}/complete-registration`, {
     method: 'POST',
     headers: { 'Content-Type': 'application/json' },
     body: JSON.stringify({ email, password }),
   });
-  if (!response.ok) {
-    throw new Error('Failed to create password');
-  }
-  return response.json();
+  return handleResponse(response);
 };
 
 export const loginUser = async (email: string, password: string) => {
@@ -43,8 +48,5 @@ export const loginUser = async (email: string, password: string) => {
     headers: { 'Content-Type': 'application/json' },
     body: JSON.stringify({ email, password }),
   });
-  if (!response.ok) {
-    throw new Error('Invalid credentials');
-  }
-  return response.json();
+  return handleResponse(response);
 };

@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import { verifyEmail } from '../api/auth';
 
 interface EmailVerificationProps {
   email: string;
@@ -9,24 +10,31 @@ interface EmailVerificationProps {
 
 const EmailVerification: React.FC<EmailVerificationProps> = ({ email, onVerify, onCancel, onCodeNotReceived }) => {
   const [verificationCode, setVerificationCode] = useState('');
-  const [isCodeSent, setIsCodeSent] = useState(false);
+  const [error, setError] = useState<string | null>(null);
 
-  const handleResendCode = () => {
-    // Логика для повторной отправки кода
-    setIsCodeSent(true);
+  const handleVerify = async () => {
+    console.log('Sending verification code:', verificationCode);
+    try {
+      await verifyEmail(email, verificationCode);
+      onVerify(verificationCode);
+    } catch (error) {
+      console.error('Verification error:', error);
+      setError('Неверный код подтверждения. Пожалуйста, попробуйте еще раз.');
+    }
   };
 
   return (
     <div className="bg-[#1C2340] rounded-3xl p-6 w-full max-w-md text-white shadow-lg"
-         style={{
-           border: '1px solid #909090',
-           boxShadow: '0 0 250px 0 #001C50',
-           background: 'linear-gradient(135deg, #18233A 0%, #1E2B4A 100%)'
-         }}>
+      style={{
+        border: '1px solid #909090',
+        boxShadow: '0 0 250px 0 #001C50',
+        background: 'linear-gradient(135deg, #18233A 0%, #1E2B4A 100%)'
+      }}>
       <h2 className="text-2xl font-bold mb-4 text-center">Подтверждение Email</h2>
       <p className="text-center mb-6">
-        Вы успешно зарегистрированы! Введите 6-значный код подтверждения, отправленный на вашу почту <span className="text-yellow-400">{email}</span>. Если письмо не приходит, проверьте папку спам и вкладку промоакции.
+        Введите 6-значный код подтверждения, отправленный на вашу почту <span className="text-yellow-400">{email}</span>. Если письмо не приходит, проверьте папку спам и вкладку промоакции.
       </p>
+      {error && <p className="text-red-500 text-center mb-4">{error}</p>}
       <div className="mb-4">
         <label className="block text-sm mb-2">Код подтверждения</label>
         <div className="relative">
@@ -37,28 +45,6 @@ const EmailVerification: React.FC<EmailVerificationProps> = ({ email, onVerify, 
             onChange={(e) => setVerificationCode(e.target.value.replace(/\D/g, '').slice(0, 6))}
             placeholder="123456"
           />
-          <div className="absolute right-2 top-1/2 transform -translate-y-1/2 flex items-center">
-            {isCodeSent ? (
-              <>
-                <span className="text-sm text-gray-400 mr-2">Код отправлен</span>
-                <div className="relative group">
-                  <svg className="w-5 h-5 text-gray-400 cursor-help" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
-                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M8.228 9c.549-1.165 2.03-2 3.772-2 2.21 0 4 1.343 4 3 0 1.4-1.278 2.575-3.006 2.907-.542.104-.994.54-.994 1.093m0 3h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"></path>
-                  </svg>
-                  <div className="absolute hidden group-hover:block bg-gray-800 text-white text-xs p-2 rounded shadow-lg right-0 mt-2 w-48">
-                    Код был отправлен на вашу почту. Если вы не получили код, проверьте папку спам или запросите новый код.
-                  </div>
-                </div>
-              </>
-            ) : (
-              <button
-                className="text-yellow-400 text-sm hover:underline"
-                onClick={handleResendCode}
-              >
-                Отправить код повторно
-              </button>
-            )}
-          </div>
         </div>
       </div>
       <p className="text-center text-yellow-400 text-sm mb-4 cursor-pointer" onClick={onCodeNotReceived}>
@@ -66,7 +52,7 @@ const EmailVerification: React.FC<EmailVerificationProps> = ({ email, onVerify, 
       </p>
       <button
         className={`w-full py-3 rounded-full mb-3 ${verificationCode.length === 6 ? 'bg-yellow-400 text-black' : 'bg-gray-500 text-white'} transition-colors duration-300`}
-        onClick={() => verificationCode.length === 6 && onVerify(verificationCode)}
+        onClick={handleVerify}
         disabled={verificationCode.length !== 6}
       >
         Далее

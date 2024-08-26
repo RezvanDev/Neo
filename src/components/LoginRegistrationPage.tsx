@@ -4,7 +4,7 @@ import EmailVerification from './EmailVerification';
 import CodeNotReceivedInfo from './CodeNotReceived';
 import CreatePassword from './CreatePassword';
 import UserExistsWarning from './UserExistsWarning';
-import { registerUser, loginUser, verifyEmail, createPassword } from '../api/auth';
+import { registerUser, loginUser, verifyEmail, completeRegistration } from '../api/auth';
 
 const LoginRegistrationPage: React.FC = () => {
   const navigate = useNavigate();
@@ -37,10 +37,14 @@ const LoginRegistrationPage: React.FC = () => {
         await registerUser(email);
         setShowEmailVerification(true);
       } catch (error) {
-        if (error instanceof Error && error.message === 'User with this email already exists') {
-          setShowUserExistsWarning(true);
+        if (error instanceof Error) {
+          if (error.message === 'User with this email already exists') {
+            setShowUserExistsWarning(true);
+          } else {
+            setError(error.message || 'An error occurred during registration. Please try again.');
+          }
         } else {
-          setError('An error occurred during registration. Please try again.');
+          setError('An unexpected error occurred. Please try again.');
         }
       }
     } else {
@@ -60,34 +64,24 @@ const LoginRegistrationPage: React.FC = () => {
       setShowEmailVerification(false);
       setShowCreatePassword(true);
     } catch (error) {
-      setError('Invalid verification code. Please try again.');
+      console.error('Email verification error:', error);
+      if (error instanceof Error && error.message === 'Email already verified') {
+        setShowEmailVerification(false);
+        setShowCreatePassword(true);
+      } else {
+        setError('Invalid verification code. Please try again.');
+      }
     }
   };
 
   const handleCreatePassword = async (newPassword: string) => {
     try {
-      await createPassword(email, newPassword);
+      await completeRegistration(email, newPassword);
       navigate('/dashboard');
     } catch (error) {
-      setError('Failed to create password. Please try again.');
+      setError('Failed to complete registration. Please try again.');
     }
   };
-
-  if (showUserExistsWarning) {
-    return (
-      <UserExistsWarning 
-        onClose={() => {
-          setShowUserExistsWarning(false);
-          setIsLoginMode(true); // Переключаемся на режим входа
-        }}
-        onResetPassword={() => {
-          setShowUserExistsWarning(false);
-          // Здесь логика для перехода на страницу восстановления пароля
-          // navigate('/reset-password');
-        }}
-      />
-    );
-  }
 
   if (showEmailVerification) {
     return (
@@ -113,7 +107,6 @@ const LoginRegistrationPage: React.FC = () => {
     return (
       <div className="min-h-screen bg-[#001131] flex items-center justify-center p-4">
         <CreatePassword 
-          email={email}
           onSubmit={handleCreatePassword}
           onCancel={() => {
             setShowCreatePassword(false);
@@ -154,10 +147,8 @@ const LoginRegistrationPage: React.FC = () => {
             {isLoginMode ? 'Вход в личный кабинет' : 'Регистрация личного кабинета'}
           </h2>
           
-          {error && (
-            <div className="mb-4 text-red-500 text-sm">{error}</div>
-          )}
-
+          {error && <p className="text-red-500 text-sm mb-4">{error}</p>}
+          
           <div className="mb-4">
             <label className="block text-white text-sm sm:text-base mb-2">Email</label>
             <input
