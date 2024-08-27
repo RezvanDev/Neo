@@ -66,8 +66,8 @@ const MainPage: React.FC = () => {
     <div className="min-h-screen bg-cover bg-no-repeat bg-center text-white font-sans"
          style={{ backgroundImage: `linear-gradient(rgba(10, 15, 34, 0.9), rgba(10, 15, 34, 0.9)), url(${bg})`, backgroundSize: 'cover' }}>
       <Header />
-      <main className="mx-auto mt-20 px-4 md:px-8 lg:px-16">
-        <div className="flex flex-col lg:flex-row items-center justify-between text-left lg:text-left w-full mb-16 lg:mb-24">
+      <main className="mx-auto mt-20">
+        <div className="flex flex-col lg:flex-row items-center justify-between text-left w-full mb-16 lg:mb-24 px-[3%] md:px-[5%] lg:px-[8%]">
           <div className="flex flex-col items-start text-left mb-8 lg:mb-0 lg:w-1/2">
             <p className="text-[16px] tracking-[0.15em] text-[#778398] font-normal mb-4"
                style={{ fontFamily: 'Open Sans' }}>

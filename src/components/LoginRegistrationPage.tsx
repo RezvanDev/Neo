@@ -3,7 +3,7 @@ import { useNavigate } from 'react-router-dom';
 import EmailVerification from './EmailVerification';
 import CodeNotReceivedInfo from './CodeNotReceived';
 import CreatePassword from './CreatePassword';
-import UserExistsWarning from './UserExistsWarning';
+import UserExistsWarning from './UserExistsWarningPage';
 import { registerUser, loginUser, verifyEmail, completeRegistration } from '../api/auth';
 
 const LoginRegistrationPage: React.FC = () => {
@@ -39,7 +39,7 @@ const LoginRegistrationPage: React.FC = () => {
       } catch (error) {
         if (error instanceof Error) {
           if (error.message === 'User with this email already exists') {
-            setShowUserExistsWarning(true);
+            navigate('/user-exists-warning');
           } else {
             setError(error.message || 'An error occurred during registration. Please try again.');
           }

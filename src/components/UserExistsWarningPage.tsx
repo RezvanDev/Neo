@@ -1,13 +1,19 @@
 import React from 'react';
+import { useNavigate } from 'react-router-dom';
 
-interface UserExistsWarningProps {
-  onClose: () => void;
-  onResetPassword: () => void;
-}
+const UserExistsWarningPage: React.FC = () => {
+  const navigate = useNavigate();
 
-const UserExistsWarning: React.FC<UserExistsWarningProps> = ({ onClose, onResetPassword }) => {
+  const handleClose = () => {
+    navigate('/login'); // Переход на страницу регистрации/входа
+  };
+
+  const handleResetPassword = () => {
+    navigate('/forgot-password'); // Переход на страницу восстановления пароля
+  };
+
   return (
-    <div className="fixed inset-0 bg-[#18233A] bg-opacity-100 flex items-center justify-center p-4">
+    <div className="min-h-screen bg-[#18233A] bg-opacity-100 flex items-center justify-center p-4">
       <div className="bg-[#1C2340] rounded-3xl overflow-hidden max-w-md w-full">
         <div className="bg-[#FF6B6B] p-4 flex items-center justify-center">
           <svg className="w-6 h-6 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
@@ -20,13 +26,13 @@ const UserExistsWarning: React.FC<UserExistsWarningProps> = ({ onClose, onResetP
             Если вы не помните пароль, восстановите его через «Забыли пароль?» или перейдите сразу на восстановление.
           </p>
           <button
-            onClick={onResetPassword}
+            onClick={handleResetPassword}
             className="w-full bg-[#FBE318] text-black font-bold py-2 px-4 rounded-full mb-3 hover:bg-yellow-400 transition-colors"
           >
             Восстановить пароль
           </button>
           <button
-            onClick={onClose}
+            onClick={handleClose}
             className="w-full bg-transparent text-white font-bold py-2 px-4 rounded-full border border-white hover:bg-white hover:text-black transition-colors"
           >
             Закрыть
@@ -37,4 +43,4 @@ const UserExistsWarning: React.FC<UserExistsWarningProps> = ({ onClose, onResetP
   );
 };
 
-export default UserExistsWarning;
+export default UserExistsWarningPage;
