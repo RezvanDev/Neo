@@ -5,11 +5,11 @@ const UserExistsWarningPage: React.FC = () => {
   const navigate = useNavigate();
 
   const handleClose = () => {
-    navigate('/login'); // Переход на страницу регистрации/входа
+    navigate('/login');
   };
 
   const handleResetPassword = () => {
-    navigate('/forgot-password'); // Переход на страницу восстановления пароля
+    navigate('/forgot-password');
   };
 
   return (
