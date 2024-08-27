@@ -1,4 +1,4 @@
-const API_URL = 'https://4027-202-79-184-241.ngrok-free.app/auth';
+const API_URL = 'https://7cdf-202-79-184-241.ngrok-free.app/auth';
 
 const handleResponse = async (response: Response) => {
   const data = await response.json();

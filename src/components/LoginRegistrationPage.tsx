@@ -130,13 +130,13 @@ const LoginRegistrationPage: React.FC = () => {
         <div className="relative z-10">
           <div className="flex mb-6 bg-[#1C2340] rounded-full p-1 border border-[#909090]">
             <button
-              className={`flex-1 py-2 text-center text-sm sm:text-base rounded-full ${isLoginMode ? 'bg-[#FBE318] text-black' : 'bg-transparent text-white'}`}
+              className={`flex-1 py-2 text-center text-sm sm:text-base rounded-full ${isLoginMode ? 'bg-[#CBFB5C] text-black' : 'bg-transparent text-white'}`}
               onClick={() => setIsLoginMode(true)}
             >
               Вход
             </button>
             <button
-              className={`flex-1 py-2 text-center text-sm sm:text-base rounded-full ${!isLoginMode ? 'bg-[#FBE318] text-black' : 'bg-transparent text-white'}`}
+              className={`flex-1 py-2 text-center text-sm sm:text-base rounded-full ${!isLoginMode ? 'bg-[#CBFB5C] text-black' : 'bg-transparent text-white'}`}
               onClick={() => setIsLoginMode(false)}
             >
               Регистрация
@@ -164,7 +164,7 @@ const LoginRegistrationPage: React.FC = () => {
             <div className="mb-4">
               <div className="flex justify-between items-center mb-2">
                 <label className="text-white text-sm sm:text-base">Пароль</label>
-                <a href="/forgot-password" className="text-[#FBE318] text-xs sm:text-sm">Забыли пароль?</a>
+                <a href="/forgot-password" className="text-[#CBFB5C] text-xs sm:text-sm">Забыли пароль?</a>
               </div>
               <input
                 type="password"
@@ -191,7 +191,7 @@ const LoginRegistrationPage: React.FC = () => {
           )}
           
           <button
-            className={`w-full py-2 sm:py-3 rounded-full mb-4 text-sm sm:text-base ${canProceed ? 'bg-[#FBE318] text-black' : 'bg-gray-500 text-white cursor-not-allowed'}`}
+            className={`w-full py-2 sm:py-3 rounded-full mb-4 text-sm sm:text-base ${canProceed ? 'bg-[#CBFB5C] text-black' : 'bg-gray-500 text-white cursor-not-allowed'}`}
             disabled={!canProceed}
             onClick={handleSubmit}
           >
