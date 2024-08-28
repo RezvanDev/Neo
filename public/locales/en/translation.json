@@ -1,0 +1,203 @@
+
+{
+  "menu": {
+    "coin": "Coin",
+    "individuals": "Individuals",
+    "business": "Business",
+    "bank": "Bank",
+    "about": "About",
+    "statistics": "Statistics"
+  },
+  "header": {
+    "userIcon": "User icon",
+    "personalAccount": "Personal Account"
+  },
+  "main": {
+    "financialFreedom": "FINANCIAL FREEDOM",
+    "smart": "SMART",
+    "intellectual": "INTELLECTUAL",
+    "technology": "TECHNOLOGY",
+    "description": "Save your finances with minimal commission in a new generation online wallet",
+    "register": "Register",
+    "coinAlt": "Smart Intellectual Technology",
+    "innovativePaymentSystem": "Innovative payment system",
+    "innovative": "INNOVATIVE",
+    "paymentSystem": "PAYMENT AND SETTLEMENT SYSTEM",
+    "iconAlt": "Icon",
+    "learnMore": "Learn More",
+    "productsAndServices": "PRODUCTS AND SERVICES"
+  },
+  "features": {
+    "transfers": "Money transfers, payment for goods and services by card, currency exchange",
+    "globalPayments": "Worldwide payments without restrictions",
+    "users": "Users - individuals and legal entities"
+  },
+  "content": {
+    "wallet": {
+      "title": "Wallet",
+      "description": "Your transfers and payments are integrated into the latest wallet system and encrypted. Security and anonymity are ensured by the smart contract system based on the user's Sit number."
+    },
+    "neobank": {
+      "title": "SIT Neobank",
+      "description": "Neobank, built on cryptographic technologies, provides the highest level of security and reliability, the functions of which are under reliable control of the AI algorithm."
+    },
+    "coin": {
+      "title": "Coin",
+      "description": "The coin is created on the basis of the SIT blockchain, the main difference of which is a high level of security and stability, the value of which is regulated by the analysis of the state of the world market."
+    },
+    "currencies": {
+      "title": "Currencies in the system",
+      "description": "Each user in their personal account can independently choose the currency for conversion and make an exchange in the way that is convenient for them, both fiat and some cryptocurrencies are integrated."
+    },
+    "p2p": {
+      "title": "P2P transfers",
+      "description": "Transactions between two users are carried out using the user identifier, which eliminates fraud attempts and provides the possibility of instant transfer of funds to any point in the world without the participation of a third party."
+    },
+    "business": {
+      "title": "For business",
+      "description": "The owner of each organization can register a business account, through which interaction with other companies takes place, and also allows interaction with employees."
+    },
+    "multicard": {
+      "title": "Multicard",
+      "description": "The project's payment card, the currency of which is the Fehu coin, the funds on which are converted into the desired currency and then sent to the recipient. All transfers are absolutely confidential."
+    },
+    "messenger": {
+      "title": "SIT messenger",
+      "description": "The application is designed to ensure confidentiality between users, using encryption and blockchain technology, the messenger provides high security of messages."
+    },
+    "investment": {
+      "title": "Financial Investment Market",
+      "description": "A center of financial operations where clients can invest in various assets. Supports buying and selling of securities, stocks and other financial instruments."
+    },
+    "cryptomessenger": {
+      "title": "Cryptomessenger",
+      "description": "This application is designed to provide confidential communications and messaging between users. It uses encryption and operates within our ecosystem."
+    },
+    "ai": {
+      "title": "All management under AI",
+      "description": "Artificial intelligence helps analyze and manage your financial assets, providing optimal conditions for growth and capital protection."
+    },
+    "loan": {
+      "title": "Loan program",
+      "description": "The loan program includes personalized conditions, which reduces the risk and increases the likelihood of success of business projects."
+    }
+  },
+  "rates": {
+    "fehuUsd": "Fehu/USD {{rate}}",
+    "fehuEur": "Fehu/EUR {{rate}}",
+    "fehuGbp": "Fehu/GBP {{rate}}",
+    "fehuTry": "Fehu/TRY {{rate}}",
+    "fehuJpy": "Fehu/JPY {{rate}}",
+    "fehuRub": "Fehu/RUB {{rate}}",
+    "fehuCny": "Fehu/CNY {{rate}}"
+  },
+  "errors": {
+    "fetchRates": "Error fetching rates"
+  },
+  "footer": {
+    "aboutSIT": "About SIT",
+    "aboutUs": "About Us",
+    "contactUs": "Contact Us",
+    "userAgreement": "User Agreement",
+    "privacyPolicy": "Privacy Policy",
+    "services": "Services",
+    "partnership": "Partnership",
+    "commissions": "Commissions",
+    "forBusiness": "For Business",
+    "risks": "Risks",
+    "support": "Support",
+    "supportCenter": "Support Center",
+    "phishingProtection": "Phishing Protection",
+    "announcements": "Announcements",
+    "sitCommunity": "SIT Community",
+    "products": "Products",
+    "buyCrypto": "Buy Crypto",
+    "p2pTransfers": "P2P Transfers",
+    "convert": "Convert",
+    "trade": "Trade",
+    "buyUSDC": "Buy USDC",
+    "buyUSDT": "Buy USDT",
+    "buySFH": "Buy SFH",
+    "cryptoCalculator": "Crypto Calculator",
+    "downloadApp": "Download App",
+    "qrCodeAlt": "QR Code",
+    "scanQRCode": "Scan QR code to download",
+    "allRightsReserved": "All rights reserved.",
+    "termsOfUse": "Terms of Use",
+    "privacy": "Privacy"
+  },
+  "loginRegistration": {
+    "login": "Login",
+    "register": "Register",
+    "loginTitle": "Login to your account",
+    "registerTitle": "Register a new account",
+    "email": "Email",
+    "enterEmail": "Enter your email",
+    "password": "Password",
+    "enterPassword": "Enter your password",
+    "forgotPassword": "Forgot password?",
+    "agreeTerms": "By creating an account, I agree to the Terms of Use and Privacy Policy.",
+    "loginButton": "Login",
+    "nextButton": "Next",
+    "cancelButton": "Cancel",
+    "supportInfo": "If you have any problems, please contact customer support",
+    "orLiveChat": "or write in LiveChat",
+    "logo": "Logo"
+  },
+  "createPassword": {
+    "title": "Create Password",
+    "password": "Password",
+    "enterPassword": "Enter password",
+    "confirmPassword": "Confirm Password",
+    "enterConfirmPassword": "Re-enter password",
+    "passwordMismatch": "Passwords do not match",
+    "requireNumber": "At least one number",
+    "requireLength": "8 to 128 characters",
+    "requireUpperCase": "At least one uppercase letter",
+    "nextButton": "Next",
+    "cancelButton": "Cancel",
+    "supportInfo": "If you have any problems, please contact customer support",
+    "orLiveChat": "or write in LiveChat"
+  },
+  "emailVerification": {
+    "title": "Email Verification",
+    "instruction": "Enter the 6-digit verification code sent to your email",
+    "checkSpam": "If you don't receive the email, please check your spam folder and promotions tab.",
+    "invalidCode": "Invalid verification code. Please try again.",
+    "codeLabel": "Verification Code",
+    "notReceived": "Didn't receive the code?",
+    "nextButton": "Next",
+    "cancelButton": "Cancel",
+    "supportInfo": "If you have any problems, please contact customer support",
+    "orLiveChat": "or write in LiveChat"
+  },
+  "codeNotReceived": {
+    "title": "Haven't received the verification code sent to your email?",
+    "description": "The verification code has been sent to your email. If you haven't received the code after several attempts, try the following:",
+    "checkSpam": "Check your Spam folder.",
+    "checkEmail": "Make sure you're using this email address — {{email}}",
+    "waitAndRetry": "The message may take a few minutes to arrive. Try again in 20 minutes.",
+    "whitelistEmail": "Whitelist the email address. Learn more about setting up email whitelisting.",
+    "okButton": "OK"
+  },
+  "forgotPassword": {
+    "title": "Forgot Password?",
+    "instruction": "To reset your password, please enter the email you used during registration.",
+    "email": "Email",
+    "emailPlaceholder": "Enter your email",
+    "sendButton": "Send Email",
+    "cancelButton": "Cancel",
+    "supportInfo": "If you have any problems, please contact customer support",
+    "orLiveChat": "or write in LiveChat"
+  },
+  "errorPage": {
+    "altText": "Page under construction",
+    "countdownTitle": "Time remaining until the launch of SIT payment system:",
+    "days": "Days",
+    "hours": "Hours",
+    "minutes": "Minutes",
+    "seconds": "Seconds",
+    "pageUnderConstruction": "Page Under Construction",
+    "returnToHome": "Return to Home Page"
+  }
+}

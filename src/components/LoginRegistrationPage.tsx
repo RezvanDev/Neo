@@ -1,13 +1,16 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
+import { useTranslation } from 'react-i18next';
 import EmailVerification from './EmailVerification';
 import CodeNotReceivedInfo from './CodeNotReceived';
 import CreatePassword from './CreatePassword';
 import UserExistsWarning from './UserExistsWarningPage';
 import { registerUser, loginUser, verifyEmail, completeRegistration } from '../api/auth';
+import logo from '../img/logo.png';
 
 const LoginRegistrationPage: React.FC = () => {
   const navigate = useNavigate();
+  const { t, i18n } = useTranslation();
   const [isLoginMode, setIsLoginMode] = useState(true);
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
@@ -18,6 +21,10 @@ const LoginRegistrationPage: React.FC = () => {
   const [showUserExistsWarning, setShowUserExistsWarning] = useState(false);
   const [showCreatePassword, setShowCreatePassword] = useState(false);
   const [error, setError] = useState<string | null>(null);
+
+  useEffect(() => {
+    console.log('Current language:', i18n.language);
+  }, [i18n.language]);
 
   const handleModeToggle = () => {
     setIsLoginMode(!isLoginMode);
@@ -129,49 +136,57 @@ const LoginRegistrationPage: React.FC = () => {
         }}
       >
         <div className="relative z-10">
+          <div className="flex justify-center mb-6">
+            <img 
+              src={logo} 
+              alt={t('loginRegistration.logo')} 
+              className="w-32 h-auto cursor-pointer" 
+              onClick={() => navigate('/')}
+            />
+          </div>
           <div className="flex mb-6 bg-[#1C2340] rounded-full p-1 border border-[#909090]">
             <button
               className={`flex-1 py-2 text-center text-sm sm:text-base rounded-full ${isLoginMode ? 'bg-[#CBFB5C] text-black' : 'bg-transparent text-white'}`}
               onClick={() => setIsLoginMode(true)}
             >
-              Вход
+              {t('loginRegistration.login')}
             </button>
             <button
               className={`flex-1 py-2 text-center text-sm sm:text-base rounded-full ${!isLoginMode ? 'bg-[#CBFB5C] text-black' : 'bg-transparent text-white'}`}
               onClick={() => setIsLoginMode(false)}
             >
-              Регистрация
+              {t('loginRegistration.register')}
             </button>
           </div>
-          
+
           <h2 className="text-xl sm:text-2xl text-white mb-4 sm:mb-6">
-            {isLoginMode ? 'Вход в личный кабинет' : 'Регистрация личного кабинета'}
+            {isLoginMode ? t('loginRegistration.loginTitle') : t('loginRegistration.registerTitle')}
           </h2>
-          
+
           {error && <p className="text-red-500 text-sm mb-4">{error}</p>}
-          
+
           <div className="mb-4">
-            <label className="block text-white text-sm sm:text-base mb-2">Email</label>
+            <label className="block text-white text-sm sm:text-base mb-2">{t('loginRegistration.email')}</label>
             <input
               type="email"
               className="w-full bg-[#1C2340] text-white p-2 sm:p-3 rounded-lg text-sm sm:text-base"
               value={email}
               onChange={(e) => setEmail(e.target.value)}
-              placeholder="Введите почту"
+              placeholder={t('loginRegistration.enterEmail')}
             />
           </div>
-          
+
           {isLoginMode && (
           <div className="mb-4">
             <div className="flex justify-between items-center mb-2">
-              <label className="text-white text-sm sm:text-base">Пароль</label>
-              <a href="/forgot-password" className="text-[#CBFB5C] text-xs sm:text-sm">Забыли пароль?</a>
+              <label className="text-white text-sm sm:text-base">{t('loginRegistration.password')}</label>
+              <a href="/forgot-password" className="text-[#CBFB5C] text-xs sm:text-sm">{t('loginRegistration.forgotPassword')}</a>
             </div>
             <div className="relative">
               <input
                 type={showPassword ? "text" : "password"}
                 className="w-full bg-[#1C2340] text-white p-2 sm:p-3 rounded-lg text-sm sm:text-base pr-10"
-                placeholder="Введите пароль"
+                placeholder={t('loginRegistration.enterPassword')}
                 value={password}
                 onChange={(e) => setPassword(e.target.value)}
               />
@@ -205,28 +220,28 @@ const LoginRegistrationPage: React.FC = () => {
                   onChange={(e) => setAgreeTerms(e.target.checked)}
                   className="mr-2 mt-1"
                 />
-                <span>Создавая учетную запись, я соглашаюсь с Условиями использования и Политикой конфиденциальности.</span>
+                <span>{t('loginRegistration.agreeTerms')}</span>
               </label>
             </div>
           )}
-          
+
           <button
             className={`w-full py-2 sm:py-3 rounded-full mb-4 text-sm sm:text-base ${canProceed ? 'bg-[#CBFB5C] text-black' : 'bg-gray-500 text-white cursor-not-allowed'}`}
             disabled={!canProceed}
             onClick={handleSubmit}
           >
-            {isLoginMode ? 'Войти' : 'Далее'}
+            {isLoginMode ? t('loginRegistration.loginButton') : t('loginRegistration.nextButton')}
           </button>
-          
+
           <button 
             className="w-full py-2 sm:py-3 rounded-full border border-white text-white text-sm sm:text-base"
             onClick={() => navigate('/')}
           >
-            Отмена
+            {t('loginRegistration.cancelButton')}
           </button>
-          
+
           <p className="text-white text-xs sm:text-sm mt-4 text-center">
-            Если у Вас возникли проблемы обратитесь в службу поддержки клиентов <span className="text-yellow-400">support</span> или напишите в LiveChat
+            {t('loginRegistration.supportInfo')} <span className="text-yellow-400">support</span> {t('loginRegistration.orLiveChat')}
           </p>
         </div>
       </div>

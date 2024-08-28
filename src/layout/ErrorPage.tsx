@@ -1,10 +1,12 @@
 import React, { useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
+import { useTranslation } from 'react-i18next';
 import coin from '../img/coin.gif';
 import Header from './Header';
 import Footer from './Footer';
 
 const ErrorPage: React.FC = () => {
+  const { t } = useTranslation();
   const [timeRemaining, setTimeRemaining] = useState({
     days: 0,
     hours: 0,
@@ -13,10 +15,11 @@ const ErrorPage: React.FC = () => {
   });
 
   useEffect(() => {
+    const launchDate = new Date('Dec 31, 2024 00:00:00').getTime();
+
     const countdown = () => {
-      const launchDate = new Date('Dec 31, 2024 00:00:00').getTime();
       const now = new Date().getTime();
-      const timeLeft = launchDate - now;
+      const timeLeft = Math.max(launchDate - now, 0);
 
       setTimeRemaining({
         days: Math.floor(timeLeft / (1000 * 60 * 60 * 24)),
@@ -33,34 +36,26 @@ const ErrorPage: React.FC = () => {
   }, []);
 
   return (
-    <div className="bg-gray-900 text-white min-h-screen flex flex-col">
+    <div className="bg-[#001131] text-white min-h-screen flex flex-col">
       <Header />
-      <main className="flex-grow flex flex-col items-center justify-center text-center">
+      <main className="flex-grow flex flex-col items-center justify-center text-center px-4">
         <div className="flex flex-col items-center">
-          <img src={coin} alt="Страница в разработке" className="max-w-[150px] md:max-w-[200px] lg:max-w-[300px] xl:max-w-[400px]" />
-          <h2 className="text-4xl font-bold mb-6">До запуска платежной системы SIT осталось:</h2>
-          <div className="flex space-x-6 text-2xl md:text-3xl lg:text-4xl">
-            <div className="flex flex-col items-center">
-              <span className="font-bold">{timeRemaining.days}</span>
-              <span className="text-lg">Дней</span>
-            </div>
-            <div className="flex flex-col items-center">
-              <span className="font-bold">{timeRemaining.hours}</span>
-              <span className="text-lg">Часов</span>
-            </div>
-            <div className="flex flex-col items-center">
-              <span className="font-bold">{timeRemaining.minutes}</span>
-              <span className="text-lg">Минут</span>
-            </div>
-            <div className="flex flex-col items-center">
-              <span className="font-bold">{timeRemaining.seconds}</span>
-              <span className="text-lg">Секунд</span>
-            </div>
+          <img src={coin} alt={t('errorPage.altText')} className="max-w-[150px] md:max-w-[200px] lg:max-w-[300px] xl:max-w-[400px] animate-pulse" />
+          <h2 className="text-3xl md:text-4xl font-bold mb-6 mt-8">{t('errorPage.countdownTitle')}</h2>
+          <div className="flex space-x-4 md:space-x-6 text-2xl md:text-3xl lg:text-4xl">
+            {Object.entries(timeRemaining).map(([unit, value]) => (
+              <div key={unit} className="flex flex-col items-center">
+                <span className="font-bold">{value}</span>
+                <span className="text-sm md:text-lg">{t(`errorPage.${unit}`)}</span>
+              </div>
+            ))}
           </div>
         </div>
-        <div className="mb-10">
-          <h1 className="text-3xl font-bold mb-4">Страница в разработке</h1>
-          <Link to="/" className="text-blue-400 hover:underline text-xl">Вернуться на главную страницу</Link>
+        <div className="mt-12 mb-10">
+          <h1 className="text-2xl md:text-3xl font-bold mb-4">{t('errorPage.pageUnderConstruction')}</h1>
+          <Link to="/" className="text-[#CBFB5C] hover:underline text-xl transition-colors duration-300">
+            {t('errorPage.returnToHome')}
+          </Link>
         </div>
       </main>
       <Footer />

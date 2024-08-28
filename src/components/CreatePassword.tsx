@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { Eye, EyeOff, Check } from 'lucide-react';
+import { useTranslation } from 'react-i18next';
 
 interface CreatePasswordProps {
   onSubmit: (password: string) => void;
@@ -7,6 +8,7 @@ interface CreatePasswordProps {
 }
 
 const CreatePassword: React.FC<CreatePasswordProps> = ({ onSubmit, onCancel }) => {
+  const { t } = useTranslation();
   const [password, setPassword] = useState('');
   const [confirmPassword, setConfirmPassword] = useState('');
   const [showPassword, setShowPassword] = useState(false);
@@ -31,7 +33,7 @@ const CreatePassword: React.FC<CreatePasswordProps> = ({ onSubmit, onCancel }) =
     if (password === confirmPassword && Object.values(isValid).every(Boolean)) {
       onSubmit(password);
     } else if (password !== confirmPassword) {
-      setError('Пароли не совпадают');
+      setError(t('createPassword.passwordMismatch'));
     }
   };
 
@@ -50,18 +52,19 @@ const CreatePassword: React.FC<CreatePasswordProps> = ({ onSubmit, onCancel }) =
            boxShadow: '0 0 250px 0 #001C50',
            background: 'linear-gradient(135deg, #18233A 0%, #1E2B4A 100%)'
          }}>
-      <h2 className="text-2xl font-bold mb-6 text-center">Создайте пароль</h2>
+      <h2 className="text-2xl font-bold mb-6 text-center">{t('createPassword.title')}</h2>
       {error && (
         <div className="mb-4 text-red-500 text-sm">{error}</div>
       )}
       <div className="mb-4">
-        <label className="block mb-2">Пароль</label>
+        <label className="block mb-2">{t('createPassword.password')}</label>
         <div className="relative">
           <input
             type={showPassword ? "text" : "password"}
             className="w-full bg-[#2C3454] p-3 pr-10 rounded-lg text-white"
             value={password}
             onChange={(e) => setPassword(e.target.value)}
+            placeholder={t('createPassword.enterPassword')}
           />
           <button 
             className="absolute right-3 top-1/2 transform -translate-y-1/2 text-gray-400"
@@ -72,13 +75,14 @@ const CreatePassword: React.FC<CreatePasswordProps> = ({ onSubmit, onCancel }) =
         </div>
       </div>
       <div className="mb-6">
-        <label className="block mb-2">Подтвердить пароль</label>
+        <label className="block mb-2">{t('createPassword.confirmPassword')}</label>
         <div className="relative">
           <input
             type={showConfirmPassword ? "text" : "password"}
             className="w-full bg-[#2C3454] p-3 pr-10 rounded-lg text-white"
             value={confirmPassword}
             onChange={(e) => setConfirmPassword(e.target.value)}
+            placeholder={t('createPassword.enterConfirmPassword')}
           />
           <button 
             className="absolute right-3 top-1/2 transform -translate-y-1/2 text-gray-400"
@@ -91,36 +95,36 @@ const CreatePassword: React.FC<CreatePasswordProps> = ({ onSubmit, onCancel }) =
       <div className="mb-4 text-sm bg-[#2C3454] p-3 rounded-lg">
         <p className={`flex items-center ${isValid.hasNumber ? 'text-green-400' : 'text-white'}`}>
           {isValid.hasNumber && <Check size={16} className="mr-2" />}
-          Минимум одна цифра
+          {t('createPassword.requireNumber')}
         </p>
         <p className={`flex items-center ${isValid.isLongEnough ? 'text-green-400' : 'text-white'}`}>
           {isValid.isLongEnough && <Check size={16} className="mr-2" />}
-          От 8 до 128 символов
+          {t('createPassword.requireLength')}
         </p>
         <p className={`flex items-center ${isValid.hasUpperCase ? 'text-green-400' : 'text-white'}`}>
           {isValid.hasUpperCase && <Check size={16} className="mr-2" />}
-          Минимум одна заглавная буква
+          {t('createPassword.requireUpperCase')}
         </p>
       </div>
       <button
         className={`w-full py-3 rounded-full mb-3 ${
           password === confirmPassword && Object.values(isValid).every(Boolean)
-            ? 'bg-yellow-400 text-black'
+            ? 'bg-[#CBFB5C] text-black'
             : 'bg-gray-500 text-white'
         } transition-colors duration-300`}
         onClick={handleSubmit}
         disabled={!(password === confirmPassword && Object.values(isValid).every(Boolean))}
       >
-        Далее
+        {t('createPassword.nextButton')}
       </button>
       <button 
-        className="w-full py-3 rounded-full border border-yellow-400 text-yellow-400"
+        className="w-full py-3 rounded-full border border-white text-white"
         onClick={onCancel}
       >
-        Отмена
+        {t('createPassword.cancelButton')}
       </button>
       <p className="text-xs text-center mt-4">
-        Если у Вас возникли проблемы обратитесь в службу поддержки клиентов <span className="text-yellow-400">support</span> или напишите в LiveChat
+        {t('createPassword.supportInfo')} <span className="text-yellow-400">support</span> {t('createPassword.orLiveChat')}
       </p>
     </div>
   );

@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
+import { useTranslation } from 'react-i18next';
 import logo from '../img/logo.png';
 import login from '../img/login.png';
 import ru from '../img/ru.png';
@@ -7,20 +8,20 @@ import en from '../img/en.png';
 
 const Header: React.FC = () => {
     const navigate = useNavigate();
+    const { t, i18n } = useTranslation();
     const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
-    const [selectedLanguage, setSelectedLanguage] = useState('ru');
 
-    const handleChange = (event: React.ChangeEvent<HTMLSelectElement>) => {
-        setSelectedLanguage(event.target.value);
+    const changeLanguage = (lng: string) => {
+        i18n.changeLanguage(lng);
     };
 
     const menuItems = [
-        { href: "/coin", text: "Монета" },
-        { href: "/phis_users", text: "Физ. лицам" },
-        { href: "/business", text: "Бизнесу" },
-        { href: "/bank", text: "Банк" },
-        { href: "/about", text: "О проекте" },
-        { href: "/statistic", text: "Статистика" },
+        { href: "/coin", text: t("menu.coin") },
+        { href: "/phis_users", text: t("menu.individuals") },
+        { href: "/business", text: t("menu.business") },
+        { href: "/bank", text: t("menu.bank") },
+        { href: "/about", text: t("menu.about") },
+        { href: "/statistic", text: t("menu.statistics") },
     ];
 
     return (
@@ -49,23 +50,23 @@ const Header: React.FC = () => {
                 <div className="hidden lg:flex items-center space-x-4">
                     <div className="relative">
                         <select
-                            value={selectedLanguage}
-                            onChange={handleChange}
+                            value={i18n.language}
+                            onChange={(e) => changeLanguage(e.target.value)}
                             className="bg-transparent text-white text-sm border-none outline-none cursor-pointer appearance-none pr-6 hover:text-[#CBFB5C] transition-colors duration-300"
                         >
                             <option value="ru">RU</option>
                             <option value="en">EN</option>
                         </select>
                         <div className="absolute inset-y-0 right-0 flex items-center pointer-events-none">
-                            <img src={selectedLanguage === 'ru' ? ru : en} alt={selectedLanguage.toUpperCase()} className="w-5 h-5" />
+                            <img src={i18n.language === 'ru' ? ru : en} alt={i18n.language.toUpperCase()} className="w-5 h-5" />
                         </div>
                     </div>
                     <button
                         className="bg-[#CBFB5C] text-black text-sm font-bold py-2 px-4 rounded-full hover:bg-[#B8E251] transition-all duration-300 flex items-center transform hover:scale-105 shadow-md"
                         onClick={() => navigate('/login')}
                     >
-                        <img src={login} alt="Иконка пользователя" className="w-4 h-4 mr-2" />
-                        <span>Личный кабинет</span>
+                        <img src={login} alt={t("header.userIcon")} className="w-4 h-4 mr-2" />
+                        <span>{t("header.personalAccount")}</span>
                     </button>
                 </div>
             </div>
@@ -80,23 +81,23 @@ const Header: React.FC = () => {
                     <div className="flex items-center justify-between mt-4">
                         <div className="relative">
                             <select
-                                value={selectedLanguage}
-                                onChange={handleChange}
+                                value={i18n.language}
+                                onChange={(e) => changeLanguage(e.target.value)}
                                 className="bg-transparent text-white text-sm border-none outline-none cursor-pointer appearance-none pr-6 hover:text-[#CBFB5C] transition-colors duration-300"
                             >
                                 <option value="ru">RU</option>
                                 <option value="en">EN</option>
                             </select>
                             <div className="absolute inset-y-0 right-0 flex items-center pointer-events-none">
-                                <img src={selectedLanguage === 'ru' ? ru : en} alt={selectedLanguage.toUpperCase()} className="w-5 h-5" />
+                                <img src={i18n.language === 'ru' ? ru : en} alt={i18n.language.toUpperCase()} className="w-5 h-5" />
                             </div>
                         </div>
                         <button
                             className="bg-[#CBFB5C] text-black text-sm font-bold py-2 px-4 rounded-full hover:bg-[#B8E251] transition-all duration-300 flex items-center transform hover:scale-105 shadow-md"
                             onClick={() => navigate('/login')}
                         >
-                            <img src={login} alt="Иконка пользователя" className="w-4 h-4 mr-2" />
-                            <span>Личный кабинет</span>
+                            <img src={login} alt={t("header.userIcon")} className="w-4 h-4 mr-2" />
+                            <span>{t("header.personalAccount")}</span>
                         </button>
                     </div>
                 </div>

@@ -7,6 +7,7 @@ import Dashboard from './components/Dashboard';
 import ErrorPage from './layout/ErrorPage';
 import StatPage from './layout/StatPage';
 import UserExistsWarningPage from './components/UserExistsWarningPage';
+import './i18n';
 
 const App: React.FC = () => {
   return (
@@ -23,7 +24,7 @@ const App: React.FC = () => {
         <Route path="/bank" element={<ErrorPage />} />
         <Route path="/about" element={<ErrorPage />} />
         <Route path="/user-exists-warning" element={<UserExistsWarningPage />} />
-        <Route path="*" element={<ErrorPage />} /> {/* Catch-all route for 404 errors */}
+        <Route path="*" element={<ErrorPage />} /> 
       </Routes>
     </Router>
   );
