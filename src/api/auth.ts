@@ -1,4 +1,4 @@
-const API_URL = 'https://1bf5-202-79-184-241.ngrok-free.app/auth';
+const API_URL = 'https://sitworldpay.ru/auth';
 
 const handleResponse = async (response: Response) => {
   const data = await response.json();
@@ -47,6 +47,24 @@ export const loginUser = async (email: string, password: string) => {
     method: 'POST',
     headers: { 'Content-Type': 'application/json' },
     body: JSON.stringify({ email, password }),
+  });
+  return handleResponse(response);
+};
+
+export const forgotPassword = async (email: string) => {
+  const response = await fetch(`${API_URL}/forgot-password`, {
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify({ email }),
+  });
+  return handleResponse(response);
+};
+
+export const resetPassword = async (email: string, code: string, newPassword: string) => {
+  const response = await fetch(`${API_URL}/reset-password`, {
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify({ email, code, newPassword }),
   });
   return handleResponse(response);
 };
