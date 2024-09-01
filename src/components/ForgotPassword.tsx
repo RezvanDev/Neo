@@ -21,8 +21,13 @@ const ForgotPassword: React.FC = () => {
       const response = await forgotPassword(email);
       setMessage(response.message);
       setStage('code');
-    } catch (err) {
-      setError(err.message || 'Не удалось отправить запрос на восстановление пароля');
+    } catch (err: unknown) {
+      if (err instanceof Error) {
+        setError(err.message);
+      } else {
+        setError('Не удалось отправить запрос на восстановление пароля');
+      }
+      console.error('Error in handleSubmitEmail:', err);
     }
   };
 
@@ -41,10 +46,16 @@ const ForgotPassword: React.FC = () => {
       const response = await resetPassword(email, code, newPassword);
       setMessage(response.message);
       setTimeout(() => navigate('/login'), 3000); // Перенаправление на страницу входа через 3 секунды
-    } catch (err) {
-      setError(err.message || 'Не удалось изменить пароль');
+    } catch (err: unknown) {
+      if (err instanceof Error) {
+        setError(err.message);
+      } else {
+        setError('Не удалось изменить пароль');
+      }
+      console.error('Error in handleSubmitNewPassword:', err);
     }
   };
+
 
   return (
     <div className="min-h-screen bg-[#001131] flex items-center justify-center p-4">
